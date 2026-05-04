@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.text.TextUtils;
 
 import org.apache.commons.io.FileUtils;
 
@@ -41,8 +42,13 @@ public class MainActivity extends AppCompatActivity {
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
+        if (TextUtils.isEmpty(itemText.trim())) {
+            return;
+        }
+
         itemsAdapter.add(itemText);
         etNewItem.setText("");
+        writeItems();
 
     }
 
@@ -96,14 +102,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readItems() {
+        items = new ArrayList<>();
         File filesDir = getFilesDir();
         File todoFile = new File(filesDir, "todo.txt");
-        try {
-            items = new ArrayList<String>(readLines(todoFile));
+        if (!todoFile.exists()) {
+            return;
+        }
 
+        try {
+            items = new ArrayList<>(readLines(todoFile));
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
 
