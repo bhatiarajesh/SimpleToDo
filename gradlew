@@ -10,6 +10,9 @@
 DEFAULT_JVM_OPTS=""
 
 APP_NAME="Gradle"
+
+JAVA_HOME="/root/.local/share/mise/installs/java/24.0.2"
+export JAVA_HOME
 APP_BASE_NAME=`basename "$0"`
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
