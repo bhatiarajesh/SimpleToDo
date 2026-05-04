@@ -88,11 +88,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // REQUEST_CODE is defined above
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE && data != null && data.getExtras() != null) {
             // Extract name value from result extras
             String name = data.getExtras().getString("name");
-            int code = data.getExtras().getInt("code", 0);
             int position = data.getExtras().getInt("position",0);
+            if (position < 0 || position >= items.size() || name == null) {
+                return;
+            }
             items.set(position,name);
             itemsAdapter.notifyDataSetChanged();
             writeItems();
